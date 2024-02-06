@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: myApp
+    image: mobashyer/dockertest:1.0.1
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_DATABASE: testspringbootdb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+      REDIS_HOST: redisCache
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      KAFKA_PRODUCER_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_CONSUMER_BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - db
+      - cache
+      - kafka
+
+  db:
+    container_name: mysqldb
+    image: mysql:8.0.32
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: testspringbootdb
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+
+    volumes:
+      - ./docker/data.sql:/docker-entrypoint-initdb.d/data.sql
+
+  cache:
+    container_name: redisCache
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save '900 1' --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    restart: always
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    restart: always
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+    depends_on:
+      - zookeeper
