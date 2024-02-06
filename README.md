@@ -61,3 +61,4 @@ https://github.com/MobashyerHossain/BS23
     b. to create user http://host.docker.internal:8080/users with Post Method
     c. to update user http://host.docker.internal:8080/users/{id} with Put Method
     d. to delete user http://host.docker.internal:8080/users/{id} with Delete Method
+6. We can view the `LogCrud` records which keeps tracks of all the crud operations of `UserEntity` data using http://host.docker.internal:8080/logCruds
