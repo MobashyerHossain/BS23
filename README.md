@@ -44,3 +44,20 @@ The entire application is containerized using Docker, which simplifies deploymen
 - Lombok: Reduces boilerplate code by generating getters, setters, constructors, and other repetitive code.
 - Spring Boot Starter Data Redis: For integrating with Redis for caching user data.
 - Spring Kafka: For integrating Kafka messaging into the Spring application.
+
+## Getting Started
+
+To run this project locally using Docker, follow these steps:
+
+1. Clone the repository:
+
+https://github.com/MobashyerHossain/BS23
+
+2. open terminal on project directory.
+3. use command docker build -t mobashyer/dockertest:1.0.1 .
+4. use command docker-compose up -d
+5. after container is up and running we can use postman to do crud operation like
+    a. to get all users http://host.docker.internal:8080/users with Get Method
+    b. to create user http://host.docker.internal:8080/users with Post Method
+    c. to update user http://host.docker.internal:8080/users/{id} with Put Method
+    d. to delete user http://host.docker.internal:8080/users/{id} with Delete Method
