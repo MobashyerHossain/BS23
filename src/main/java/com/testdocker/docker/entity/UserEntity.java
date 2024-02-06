@@ -28,4 +28,9 @@ public class UserEntity implements Serializable {
         this.address = address;
         this.timestamp = LocalDateTime.now();
     }
+
+    @PrePersist
+    protected void onCreate() {
+        timestamp = LocalDateTime.now();
+    }
 }
